@@ -6,3 +6,5 @@
 
 ## Gruppmedlemmar   
  Dennis och Skurk
+## Conflict 1
+dennisbistrom gör andra ändringar än thesourmango

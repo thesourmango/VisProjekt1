@@ -15,9 +15,13 @@
 
         // Höjden på rektanglar i barcharten
         var dataTable = [30, 50, 70, 80, 40];
+        // TODO: Justera höjd och bredd av grafen enligt fönsterstorlek?
+        // Ex: 80% av fönsterbredden och 30% av höjden
+        // Utmaning: Responsivt?
         var height = 200;
         var width = 400;
         var barWidth = 40;
+        var barMargin = 20; // Mellanrum mellan rektanglar
 
         // Skapa ett ritunderlag
         var canvas = d3.select("body")
@@ -36,7 +40,7 @@
                 // bredden av rektangeln = värdet från datatabellen
                 .attr("height", function(data) { return data; })
                 // Första rektangeln x = 100*0, x2 = 100*1 ...
-                .attr("x", function(data, i) { return 50 * i; })
+                .attr("x", function(data, i) { return (barWidth + barMargin) * i; })
                 // Vi måste definiera y startpunkten enligt höjden av stapeln!
                 .attr("y", function(data) { return height - data;});
 

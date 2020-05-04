@@ -6,5 +6,5 @@
 
 ## Gruppmedlemmar   
  Dennis och Skurk
-## Conflict 1
-dennisbistrom gör andra ändringar än thesourmango
+## Läxa till 4.5 - ScaleLinear();
+ Dennis och Skurk har inte gjort läxan :(

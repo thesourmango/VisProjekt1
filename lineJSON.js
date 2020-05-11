@@ -6,15 +6,6 @@ function drawChart() {
     d3.json("lineData.json").get( function(error,dataArray) {
         // En array med våra x och y kordinater för cassiopeia
         console.log(dataArray);
-
-        // Skapa arrays för att lagra x och y värden
-        var xs = [];  var ys = [];
-        // Gå genom dataarrayn och hämta x samt y
-        for (i=0; i<dataArray.length; i++) {
-            xs.push(dataArray[i].x); // push för att lägga till ett värde till en array
-            ys.push(dataArray[i].y);
-        }
-        console.log(xs);
     
         // Skapa vårt ritunderlag
         var canvas = d3.select('body').append('svg').attr('width',width).attr('height',height);

@@ -8,17 +8,38 @@
 </head>
 <body>
     <h1>Läs in en bild med JS</h1>
+    <input type="file" id="infile" /> <!-- New code -->
     <img id="input" src="image.jpg" hidden /> <!-- Datasource -->
     <canvas id="canvas"></canvas> <!-- Rita bilddata på canvas och läs datan från canvasen -->
 
     <script>
-        window.onload = function() {
+            var canvas = document.getElementById("canvas");
             var context = canvas.getContext('2d');
-            var img = document.getElementById("input");
-            document.getElementById("canvas").height = img.height; // set canvas 
-            context.drawImage(img,0,0);
-            var imageData = context.getImageData(0,0, img.width, img.height);
-            console.log(imageData);
+            window.onload = function() {
+                // init
+                var img = document.getElementById("input"); // skapar en htmlimage var
+                canvas.height = img.height; // set canvas to img height
+                context.drawImage(img,0,0);
+                var imageData = context.getImageData(0,0, img.width, img.height);
+                console.log(imageData.data);
+                // Check if user uploads new img
+                document.getElementById('infile').addEventListener('change', handleFile);
+            };
+    
+            function handleFile(event) {
+                var reader = new FileReader; // https://javascript.info/file
+                reader.readAsDataURL(event.target.files[0]); // URlen på bilden
+            reader.onload = function (event) { // Skicka vidare händelsen
+                var img = new Image; // skapa en <img tag i js
+                img.src = event.target.result;  // lägg till src till htmlelement
+                console.log(img);
+                img.onload = function () {
+                    canvas.height = img.height; // set canvas to img height
+                    context.drawImage(img,0,0);
+                    var imageData = context.getImageData(0,0, img.width, img.height);
+                    console.log(imageData.data[0]);
+                }
+            }
         }
     </script>
 </body>

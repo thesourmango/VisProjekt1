@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Läs in en bild som en JS Array</title>
+</head>
+<body>
+    <h1>Läs in en bild med JS</h1>
+    <!-- NEW! -->
+    <input type="file" id="infile">
+    <!-- OLD -->
+    <img id="input" src="image.jpg" hidden /> <!-- Datasource -->
+    <canvas id="canvas"></canvas> <!-- Rita bilddata på canvas och läs datan från canvasen -->
+
+    <script>
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext('2d');
+        window.onload = function() {
+            // init
+            var img = document.getElementById("input"); // skapar en htmlimage var
+            canvas.height = img.height; // set canvas to img height
+            context.drawImage(img,0,0);
+            var imageData = context.getImageData(0,0, img.width, img.height);
+            console.log(imageData);
+            // Check if user uploads new img
+            document.getElementById('infile').addEventListener('change', handleFile);
+        };
+
+        function handleFile(event) {
+            var reader = new FileReader; // https://javascript.info/file
+            var imgURL = reader.readAsDataURL(event.target.files[0]); // URlen på bilden
+            console.log(imgURL); // DEBUG
+            // Filereader delivers data using events (bcus reading files may take time)
+            reader.onload = function (event) { //skicka vidare upload händelsen
+                // här har vi ingen html img element, så vi måste skapa ett
+                var img = new Image; // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images
+                img.src = event.target.result; // src attributet för taggen
+                console.log(img);
+                img.onload = function () { // vänta på att bilden laddas
+                    canvas.height = img.height; // resize canvas enligt img
+                    canvas.width = img.width;
+                    context.drawImage(img, 0, 0); // rita den nyskapta img taggen på canvasen
+                    imgData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    console.log(imgData);
+                };
+            };
+            
+        };
+    </script>
+</body>
+</html>

@@ -22,6 +22,16 @@ function drawChart() {
             .attr('stroke','blue')
             .attr('d', path(dataArray)); // <path d="M 100 350 l 150 -300" stroke="blue" fill="none" />
         
+        var dotsGroup = canvas.append('g');
+
+        // Lägg till punkter (cirklar) till datapunkterna
+        dotsGroup.selectAll('dots').data(dataArray)
+            .enter()    
+                .append('circle')
+                .attr('cx', function(data) { return data.x * 6  } )
+                .attr('cy', function(data) { return data.y * 6  } )
+                .attr('r','2')
+
     });
 
     }

@@ -49,7 +49,7 @@ function drawChart() {
             .attr('fill','none')
             .attr('stroke','blue')
             .attr('d', dString(dataFix))
-            .attr("transform","translate("+chartWidth/months.length/2+",0)");
+            .attr("transform","translate("+ chartWidth/months.length/2 +",0)");
 
         // Lägg till punkter (cirklar) till datapunkterna
         chartGroup.selectAll('dots').data(dataFix)
@@ -58,7 +58,7 @@ function drawChart() {
                 .attr('cx', function(d) { return xScale(d.month)  } )
                 .attr('cy', function(d) { return yScale(d.temp)  } )
                 .attr('r','2')
-                .attr("transform","translate("+chartWidth/months.length/2+",0)");
+                .attr("transform","translate("+ chartWidth/months.length/2 +",0)");
 
         // Rita axlar genom att .call:a på dem
         chartGroup.append("g").call(yAxis);

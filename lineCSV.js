@@ -14,19 +14,19 @@ function drawChart() {
         console.log(temps);
 
         // Skapa ritunderlag
-        var width = 400, height = 200;
+        var width = 400, height = 200, margin = 20;
         var canvas = d3.select('body').append('svg').attr('width', width).attr('height',height);
 
         // Skapa ordinal scale baserat på månaderna
         var xScale = d3.scaleBand()
             .domain(months)
-            .range([0,width]);
+            .range([0,width-(margin*2)]);
 
         // Temperaturen -20 kan inte användas som Y axel, -20 är ju utanför canvas!
         // Vi behöver en skala, för temperatur passar en lineär skala
         var yScale = d3.scaleLinear()
             .domain([d3.min(temps), d3.max(temps)]) // Vilka värden ska konverteras till pixelvärden
-            .range([height,0]); // Pixelvärden ska läggas mellan vilka värden?
+            .range([height-(margin*2),0]); // Pixelvärden ska läggas mellan vilka värden?
 
         // Generera d strängen för path
         var dString = d3.line()
@@ -34,21 +34,33 @@ function drawChart() {
             .y(function(d) { return yScale(d.temp) });
             //console.log(dString(data)); // debug, kolla på d attributet
         
+        // Y axel för temperaturer
+        var yAxis = d3.axisLeft(yScale);
+
+        // X axeln för månader
+        var xAxis = d3.axisBottom(xScale);
+
+        // Skapa en grupp som container för grafen
+        var chartGroup = canvas.append('g').attr("transform","translate("+ margin +","+ margin +")");
+
         // Rita linjen
-        canvas.append('path')
+        chartGroup.append('path')
             .attr('fill','none')
             .attr('stroke','blue')
             .attr('d', dString(dataFix));
 
-        var dotsGroup = canvas.append('g');
-
         // Lägg till punkter (cirklar) till datapunkterna
-        dotsGroup.selectAll('dots').data(dataFix)
+        chartGroup.selectAll('dots').data(dataFix)
             .enter()    
                 .append('circle')
                 .attr('cx', function(d) { return xScale(d.month)  } )
                 .attr('cy', function(d) { return yScale(d.temp)  } )
-                .attr('r','2')
+                .attr('r','2');
+
+        // Rita axlar genom att .call:a på dem
+        chartGroup.append("g").call(yAxis);
+        chartGroup.append("g").call(xAxis);
+        
 
     });  
 };

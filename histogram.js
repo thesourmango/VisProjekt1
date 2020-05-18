@@ -6,7 +6,7 @@ function drawHistogram () {
     var width = 600, height = 300, margin = 30;
     var chartWidth = width - (margin*2);
     var chartHeight = height - (margin*2);
-    var barWidth = 40, barPadding = 5;
+    var barWidth = 60, barPadding = 5;
 
     // Ladda in datan
     var heights = [], names = [];
@@ -60,7 +60,7 @@ function drawHistogram () {
         .append("rect")
         .attr("width", barWidth)
         .attr("height", function(data,i) { return chartHeight - yScale(data) } )
-        .attr("x", function(data,i) { return i * (chartWidth / antalKlasser) + barWidth/2 } )
+        .attr("x", function(data,i) { return i * (chartWidth / antalKlasser) } )
         .attr("y", function(data,i) { return yScale(data) } );
 
     // Rita axlar
